@@ -176,6 +176,8 @@ npm run dev
 The React + Vite frontend will start at:
 👉 **`http://localhost:5173`**
 
+In production, the frontend uses `https://electricity-consumption-forecasting.onrender.com/api` for API requests by default. To use a different API server, set `VITE_API_URL` in the frontend build environment.
+
 ---
 
 ## 📡 REST API Endpoint Reference

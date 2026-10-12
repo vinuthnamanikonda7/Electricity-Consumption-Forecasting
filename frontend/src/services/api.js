@@ -4,6 +4,9 @@ const getApiBaseUrl = () => {
   if (import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
+  if (import.meta.env.PROD) {
+    return 'https://electricity-consumption-forecasting.onrender.com/api';
+  }
   const hostname = typeof window !== 'undefined' ? window.location.hostname : 'localhost';
   return `http://${hostname}:5000/api`;
 };
