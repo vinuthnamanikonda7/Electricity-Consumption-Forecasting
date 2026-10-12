@@ -139,12 +139,12 @@ DB_NAME=electricity_forecasting
 PORT=5000
 
 JWT_SECRET=super_secret_jwt_key_electricity_forecasting_2026_change_in_prod
-CLIENT_URL=http://localhost:5173
+CLIENT_URL=https://electricity-consumption-forecasting.onrender.com
 ```
 
 > **Note:** If you prefer using a dedicated application user instead of `root`, you can run the user creation query provided in `database/schema.sql` and set `DB_USER=electricity_app` and `DB_PASSWORD=Electricity@1234`.
 >
-> On Render, `CLIENT_URL` is configured as `https://electricity-consumption-forecasting.onrender.com` (the frontend origin, without `/api`). The local `localhost:5173` value is for development.
+> `CLIENT_URL` is the frontend origin and must not include `/api`. For local development, set it to the frontend origin shown by Vite.
 
 ---
 
@@ -175,8 +175,7 @@ npm install
 npm run dev
 ```
 
-The React + Vite frontend will start at:
-👉 **`http://localhost:5173`**
+The React + Vite frontend will start at the local address printed by Vite.
 
 In production, the frontend uses `https://electricity-consumption-forecasting.onrender.com/api` for API requests by default. To use a different API server, set `VITE_API_URL` in the frontend build environment.
 
@@ -249,7 +248,7 @@ In production, the frontend uses `https://electricity-consumption-forecasting.on
 ## 🧪 Testing the Application
 
 1. **Registration / Login**:
-   - Navigate to `http://localhost:5173/register` and create an account.
+   - Open the frontend address printed by Vite, go to `/register`, and create an account.
    - Or run `database/seed.sql` and log in with `demo@example.com` / `password123`.
 2. **Add Consumption Readings**:
    - Go to the **Consumption** page.
@@ -275,4 +274,4 @@ In production, the frontend uses `https://electricity-consumption-forecasting.on
 - **Error: `ER_ACCESS_DENIED_ERROR`**:
   - The password in `backend/.env` does not match the MySQL password for the specified user. Update `DB_PASSWORD` in `backend/.env` and restart the backend.
 - **CORS Errors**:
-  - The backend allows the configured `CLIENT_URL` and local development origins. Render sets `CLIENT_URL` to `https://electricity-consumption-forecasting.onrender.com`; frontend API requests use the `/api` path separately.
+  - The backend allows the configured `CLIENT_URL` frontend origin. For local development, set it to the frontend origin shown by Vite; frontend API requests use the `/api` path separately.

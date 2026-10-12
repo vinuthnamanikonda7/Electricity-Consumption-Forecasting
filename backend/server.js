@@ -21,10 +21,7 @@ const PORT = process.env.PORT || 5000;
 
 // CORS configuration
 const allowedOrigins = [
-  process.env.CLIENT_URL || 'http://localhost:5173',
-  'http://localhost:5173',
-  'http://127.0.0.1:5173',
-  'http://localhost:3000'
+  process.env.CLIENT_URL || 'https://electricity-consumption-forecasting.onrender.com'
 ];
 
 app.use(cors({
