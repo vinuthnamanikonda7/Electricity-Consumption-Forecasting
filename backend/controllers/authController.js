@@ -408,7 +408,7 @@ const getMe = async (req, res, next) => {
 const updateProfile = async (req, res, next) => {
   try {
     const userId = req.user.id;
-    const { name, phone, password } = req.body;
+    const { name, phone, currentPassword, newPassword } = req.body;
 
     const updates = [];
     const params = [];
@@ -423,9 +423,40 @@ const updateProfile = async (req, res, next) => {
       params.push(phone ? phone.trim() : null);
     }
 
-    if (password && password.length >= 6) {
+    const isPasswordChangeRequested = currentPassword !== undefined || newPassword !== undefined;
+    if (isPasswordChangeRequested) {
+      if (typeof currentPassword !== 'string' || !currentPassword ||
+          typeof newPassword !== 'string' || !newPassword) {
+        return res.status(400).json({
+          success: false,
+          message: 'Please provide both your current password and a new password.'
+        });
+      }
+
+      if (newPassword.length < 6) {
+        return res.status(400).json({
+          success: false,
+          message: 'New password must be at least 6 characters long.'
+        });
+      }
+
+      const [users] = await pool.query('SELECT password FROM users WHERE id = ? LIMIT 1', [userId]);
+      if (users.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: 'User not found.'
+        });
+      }
+
+      if (!users[0].password || !(await bcrypt.compare(currentPassword, users[0].password))) {
+        return res.status(400).json({
+          success: false,
+          message: 'Current password is incorrect.'
+        });
+      }
+
       const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
+      const hashedPassword = await bcrypt.hash(newPassword, salt);
       updates.push('password = ?');
       params.push(hashedPassword);
     }
