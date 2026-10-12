@@ -1,0 +1,38 @@
+services:
+  # 1. Full-Stack Web Service on Render
+  - type: web
+    name: electroforecast-app
+    env: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm start
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+        value: 3306
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        sync: false
+        value: electricity_forecasting
+      - key: DB_SSL
+        sync: false
+        value: true
+      - key: BREVO_API_KEY
+        sync: false
+      - key: BREVO_SENDER_EMAIL
+        sync: false
+        value: vinuthnamanikonda7@gmail.com
+      - key: BREVO_SENDER_NAME
+        value: Electricity Forecasting System
