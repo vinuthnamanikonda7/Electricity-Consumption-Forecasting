@@ -9,7 +9,10 @@ const { logAdminAction, getAdminLogs } = require('../services/adminLogService');
 const getAdminMetrics = async (req, res, next) => {
   try {
     const [[usersCount]] = await pool.query('SELECT COUNT(*) as total_users FROM users');
-    const [[householdsCount]] = await pool.query('SELECT COUNT(*) as total_households FROM users WHERE role = "household"');
+    const [[householdsCount]] = await pool.query(
+      'SELECT COUNT(*) as total_households FROM users WHERE role = ?',
+      ['household']
+    );
     const [[appliancesCount]] = await pool.query('SELECT COUNT(*) as total_appliances FROM appliances');
     const [[predictionsCount]] = await pool.query('SELECT COUNT(*) as total_predictions FROM predictions');
     const [[readingsCount]] = await pool.query('SELECT COUNT(*) as total_readings FROM electricity_readings');

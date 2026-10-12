@@ -98,7 +98,8 @@ export default function AdminDashboard() {
       if (logsRes && logsRes.success) setAdminLogs(logsRes.logs);
     } catch (err) {
       console.error('Failed to load admin data:', err);
-      setToast({ type: 'error', message: 'Failed to retrieve administrator metrics.' });
+      const message = err.response?.data?.message || err.message || 'An administrator data request failed.';
+      setToast({ type: 'error', message: `Failed to load administrator data: ${message}` });
     } finally {
       setLoading(false);
     }
