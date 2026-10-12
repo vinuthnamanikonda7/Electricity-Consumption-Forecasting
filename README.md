@@ -143,6 +143,8 @@ CLIENT_URL=http://localhost:5173
 ```
 
 > **Note:** If you prefer using a dedicated application user instead of `root`, you can run the user creation query provided in `database/schema.sql` and set `DB_USER=electricity_app` and `DB_PASSWORD=Electricity@1234`.
+>
+> On Render, `CLIENT_URL` is configured as `https://electricity-consumption-forecasting.onrender.com` (the frontend origin, without `/api`). The local `localhost:5173` value is for development.
 
 ---
 
@@ -273,4 +275,4 @@ In production, the frontend uses `https://electricity-consumption-forecasting.on
 - **Error: `ER_ACCESS_DENIED_ERROR`**:
   - The password in `backend/.env` does not match the MySQL password for the specified user. Update `DB_PASSWORD` in `backend/.env` and restart the backend.
 - **CORS Errors**:
-  - The backend server is configured to allow `http://localhost:5173`. Ensure your React frontend is running on the standard Vite port 5173.
+  - The backend allows the configured `CLIENT_URL` and local development origins. Render sets `CLIENT_URL` to `https://electricity-consumption-forecasting.onrender.com`; frontend API requests use the `/api` path separately.
