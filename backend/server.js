@@ -20,13 +20,29 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // CORS configuration
-const allowedOrigins = [
-  process.env.CLIENT_URL || 'https://electricity-consumption-forecasting.onrender.com'
-];
+const rawAllowedOrigins = (process.env.CLIENT_URL || 'https://electricity-consumption-forecasting.onrender.com')
+  .split(',')
+  .map((value) => value.trim())
+  .filter(Boolean);
+
+const allowedOrigins = new Set([
+  ...rawAllowedOrigins,
+  'https://electricity-consumption-forecasting.onrender.com',
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'http://localhost:4173',
+  'http://127.0.0.1:4173'
+]);
 
 app.use(cors({
   origin: function (origin, callback) {
-    return callback(null, !origin || allowedOrigins.includes(origin));
+    const isAllowed = !origin || allowedOrigins.has(origin);
+    if (!isAllowed) {
+      console.warn(`[CORS] Blocked origin: ${origin}`);
+    }
+    return callback(null, isAllowed);
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

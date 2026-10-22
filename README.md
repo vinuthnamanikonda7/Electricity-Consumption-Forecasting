@@ -144,7 +144,7 @@ CLIENT_URL=https://electricity-consumption-forecasting.onrender.com
 
 > **Note:** If you prefer using a dedicated application user instead of `root`, you can run the user creation query provided in `database/schema.sql` and set `DB_USER=electricity_app` and `DB_PASSWORD=Electricity@1234`.
 >
-> `CLIENT_URL` is the frontend origin and must not include `/api`. For local development, set it to the frontend origin shown by Vite.
+> `CLIENT_URL` is the frontend origin and must not include `/api`. For local development, set it to the frontend origin shown by Vite, or provide a comma-separated list of allowed origins such as `http://localhost:5173,https://electricity-consumption-forecasting.onrender.com`.
 
 ---
 
