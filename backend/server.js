@@ -1,6 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
+
+dotenv.config({ path: path.join(__dirname, '.env') });
+
 const { initDB } = require('./config/db');
 const { notFoundHandler, errorHandler } = require('./middleware/errorMiddleware');
 
@@ -13,8 +17,6 @@ const adminRoutes = require('./routes/adminRoutes');
 const consumptionRoutes = require('./routes/consumptionRoutes');
 const forecastRoutes = require('./routes/forecastRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -84,7 +86,6 @@ app.use('/api/forecast', forecastRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
 // Serve static frontend build in production if built
-const path = require('path');
 const fs = require('fs');
 const frontendDist = path.join(__dirname, '../frontend/dist');
 if (fs.existsSync(frontendDist)) {

@@ -1,7 +1,8 @@
 const mysql = require('mysql2/promise');
 const dotenv = require('dotenv');
+const path = require('path');
 
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const mysqlSslMode = (process.env.MYSQL_SSL_MODE || '').toUpperCase();
 const sslConfig = process.env.DB_SSL === 'true' || mysqlSslMode === 'REQUIRED'
