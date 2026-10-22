@@ -3,7 +3,10 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const sslConfig = process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : undefined;
+const mysqlSslMode = (process.env.MYSQL_SSL_MODE || '').toUpperCase();
+const sslConfig = process.env.DB_SSL === 'true' || mysqlSslMode === 'REQUIRED'
+  ? { rejectUnauthorized: false }
+  : undefined;
 
 const pool = mysql.createPool({
   host: process.env.DB_HOST || '127.0.0.1',
